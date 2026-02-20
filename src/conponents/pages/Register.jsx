@@ -20,12 +20,13 @@ const Register = () => {
         setUser({ ...user, [e.target.name]: e.target.value })
     }
 
-    const SubmitHanddler = async (e) => { e.preventDefault(); 
+    const SubmitHanddler = async (e) => {
+        e.preventDefault();
         setIsLoading(true);
         try {
             await createUserWithEmailAndPassword(
-                auth, 
-                user.email, 
+                auth,
+                user.email,
                 user.password
             );
             setIsLoading(false);
@@ -35,10 +36,10 @@ const Register = () => {
         } catch (err) {
             setError(err.message);
         }
-       
+
     }
 
-    
+
 
 
 
@@ -71,15 +72,33 @@ const Register = () => {
                         className="w-full px-4 py-3 border rounded-lg focus:ring-2 focus:ring-primary outline-none"
                     />
 
-                    <div>
-                        {!isLoading && <button className="w-full bg-primary text-red-600 py-3 rounded-lg hover:bg-primaryDark transition">Register</button>}
+                    <div className="flex justify-center gap-1 ">
+                        {!isLoading && <button className="w-full bg-primary text-blue-700 py-3 rounded-lg hover:bg-primaryDark transition">Register</button>}
                         {isLoading && <button className="w-full bg-primary text-white py-3 rounded-lg cursor-not-allowed" disabled>Loading...</button>}
                         {error && <p className="text-red-500 text-center mt-2">{error}</p>}
+                        <samp className="flex items-center ">OR</samp>
+                        <button className="w-full bg-primary text-blue-700 py-3 rounded-lg hover:bg-primaryDark transition">
+                            Login
+                        </button>
                     </div>
+
+
+
+
+                    <div className="mt-6 space-y-3">
+                        <button className="w-full border border-primary text-primary py-2 rounded-lg hover:bg-primary hover:text-blue-500 transition">
+                            Continue with Google
+                        </button>
+
+                        <button className="w-full border border-primary text-primary py-2 rounded-lg hover:bg-primary hover:text-blue-500 transition">
+                            Continue with GitHub
+                        </button>
+                    </div>
+
                 </form>
 
             </div>
-        </div>
+        </div >
     );
 };
 
