@@ -1,9 +1,11 @@
-
+import { NavLink } from "react-router-dom";
 
 
 export default function Home() {
+
+
   return (
-        <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen bg-gray-100">
       <nav className="bg-primary text-white p-4 flex justify-between items-center">
         <h1 className="text-xl font-bold">Auth System</h1>
         <button className="bg-white text-primary px-4 py-2 rounded-lg hover:bg-gray-200 transition">
@@ -22,10 +24,13 @@ export default function Home() {
         </p>
 
         <div className="mt-8 bg-white shadow-xl p-6 rounded-2xl w-full max-w-sm">
-          <p className="text-gray-700 font-medium">User Email:</p>
-          <p className="text-primary font-semibold">
-            
-          </p>
+          <div className="hidden md:block">
+            <button className=" px-5 py-2 rounded-lg text-gray-700 font-medium hover:bg-gray-200 transition ">
+              <NavLink to="/register" className="hover:text-indigo-600 transition">
+                Sign up
+              </NavLink>
+            </button>
+          </div>
         </div>
       </div>
     </div>

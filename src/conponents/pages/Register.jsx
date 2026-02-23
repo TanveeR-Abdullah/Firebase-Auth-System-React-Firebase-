@@ -2,12 +2,12 @@
 import { useState } from "react";
 import { auth } from "../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
-// import {Navgate} from "react-router-dom";
+import { useNavigate } from "react-router-dom";
 
 const Register = () => {
 
     // ================ Variable ===========================
-    // const navigate = Navgate();
+    const navigate = useNavigate();
 
     // ====================== States =======================
 
@@ -20,6 +20,7 @@ const Register = () => {
         setUser({ ...user, [e.target.name]: e.target.value })
     }
 
+    // ===================register Handler ================
     const SubmitHanddler = async (e) => {
         e.preventDefault();
         setIsLoading(true);
@@ -31,13 +32,35 @@ const Register = () => {
             );
             setIsLoading(false);
             setError("");
-            // navigate("./Home.jsx");
+            navigate("/register/loginhomepage");
 
         } catch (err) {
+            setIsLoading(false);
             setError(err.message);
         }
 
     }
+    const loginHanddler = async (e) => {
+        e.preventDefault();
+        setIsLoading(true);
+        try {
+            await createUserWithEmailAndPassword(
+                auth,
+                user.email,
+                user.password
+            );
+            setIsLoading(false);
+            setError("");
+            navigate("/register/loginhomepage");
+
+        } catch (err) {
+            setIsLoading(false);
+            setError(err.message);
+        }
+
+    }
+
+
 
 
 
@@ -77,12 +100,16 @@ const Register = () => {
                         {isLoading && <button className="w-full bg-primary text-white py-3 rounded-lg cursor-not-allowed" disabled>Loading...</button>}
                         {error && <p className="text-red-500 text-center mt-2">{error}</p>}
                         <samp className="flex items-center ">OR</samp>
-                        <button className="w-full bg-primary text-blue-700 py-3 rounded-lg hover:bg-primaryDark transition">
-                            Login
-                        </button>
+
+
+
+
+                        {!isLoading && <button onClick={loginHanddler} className="w-full bg-primary text-blue-700 py-3 rounded-lg hover:bg-primaryDark transition">Log in</button>}
+                        {isLoading && <button className="w-full bg-primary text-white py-3 rounded-lg cursor-not-allowed" disabled>Loading...</button>}
+                        {error && <p className="text-red-500 text-center mt-2">{error}</p>}
+
+
                     </div>
-
-
 
 
                     <div className="mt-6 space-y-3">
