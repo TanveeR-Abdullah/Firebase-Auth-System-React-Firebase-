@@ -1,8 +1,12 @@
 
 import { useState } from "react";
-import { auth } from "../../firebase";
+import { auth, db, GoogleAuth, GithubAuth } from "../../firebase";
 import { createUserWithEmailAndPassword } from "firebase/auth";
+import { signInWithEmailAndPassword } from "firebase/auth";
 import { useNavigate } from "react-router-dom";
+import { setDoc, doc } from "firebase/firestore";
+import { signInWithPopup } from "firebase/auth";
+
 
 const Register = () => {
 
@@ -10,10 +14,10 @@ const Register = () => {
     const navigate = useNavigate();
 
     // ====================== States =======================
-
     const [user, setUser] = useState({ email: "", password: "" })
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
+    
 
     // ======================= handler =======================
     const handleInputChange = (e) => {
@@ -30,6 +34,13 @@ const Register = () => {
                 user.email,
                 user.password
             );
+
+            await setDoc(doc(db, "user", auth.currentUser.uid), {
+                email: user.email,
+                role: "user",
+                createdAt: new Date(),
+            })
+
             setIsLoading(false);
             setError("");
             navigate("/register/loginhomepage");
@@ -40,11 +51,13 @@ const Register = () => {
         }
 
     }
+
+    // ====================Log in Handler=====================
     const loginHanddler = async (e) => {
         e.preventDefault();
         setIsLoading(true);
         try {
-            await createUserWithEmailAndPassword(
+            await signInWithEmailAndPassword(
                 auth,
                 user.email,
                 user.password
@@ -60,6 +73,72 @@ const Register = () => {
 
     }
 
+    // ======================Google Auth register ========================
+    const handleGoogleAuth = async () => {
+        setIsLoading(true);
+        try {
+            const result = await signInWithPopup(auth, GoogleAuth);
+            const user = result.user;
+
+            await setDoc(
+                doc(db, "users", user.uid),
+                {
+                    email: user.email,
+                    provider: "google",
+                    role: "user",
+                    createdAt: new Date(),
+                },
+                await setDoc(doc(db, "user", auth.currentUser.uid), {
+                    email: user.email,
+                    role: "user",
+                    createdAt: new Date(),
+                }),
+            );
+
+            setError("");
+            navigate("/register/loginhomepage");
+
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+    // ======================GitHub Auth register ========================
+    const handleGithubAuth = async () => {
+        setIsLoading(true);
+        try {
+            const result = await signInWithPopup(auth, GithubAuth);
+            const user = result.user;
+
+            await setDoc(
+                doc(db, "users", user.uid),
+                {
+                    email: user.email,
+                    provider: "google",
+                    role: "user",
+                    createdAt: new Date(),
+                },
+                await setDoc(doc(db, "user", auth.currentUser.uid), {
+                    email: user.email,
+                    role: "user",
+                    createdAt: new Date(),
+                }),
+                { merge: true }
+            );
+
+            setError("");
+            navigate("/register/loginhomepage");
+
+        } catch (err) {
+            setError(err.message);
+        } finally {
+            setIsLoading(false);
+        }
+    };
+
+
 
 
 
@@ -73,7 +152,7 @@ const Register = () => {
                     Create Account
                 </h2>
 
-                <form className="space-y-4" onSubmit={SubmitHanddler}>
+                <form className="space-y-4" >
 
                     <input
                         type="email"
@@ -96,11 +175,10 @@ const Register = () => {
                     />
 
                     <div className="flex justify-center gap-1 ">
-                        {!isLoading && <button className="w-full bg-primary text-blue-700 py-3 rounded-lg hover:bg-primaryDark transition">Register</button>}
+                        {!isLoading && <button onClick={SubmitHanddler} className="w-full bg-primary text-blue-700 py-3 rounded-lg hover:bg-primaryDark transition">Register</button>}
                         {isLoading && <button className="w-full bg-primary text-white py-3 rounded-lg cursor-not-allowed" disabled>Loading...</button>}
                         {error && <p className="text-red-500 text-center mt-2">{error}</p>}
                         <samp className="flex items-center ">OR</samp>
-
 
 
 
@@ -113,11 +191,11 @@ const Register = () => {
 
 
                     <div className="mt-6 space-y-3">
-                        <button className="w-full border border-primary text-primary py-2 rounded-lg hover:bg-primary hover:text-blue-500 transition">
+                        <button onClick={handleGoogleAuth} className="w-full border border-primary text-primary py-2 rounded-lg hover:bg-primary hover:text-blue-500 transition">
                             Continue with Google
                         </button>
 
-                        <button className="w-full border border-primary text-primary py-2 rounded-lg hover:bg-primary hover:text-blue-500 transition">
+                        <button onClick={handleGithubAuth} className="w-full border border-primary text-primary py-2 rounded-lg hover:bg-primary hover:text-blue-500 transition">
                             Continue with GitHub
                         </button>
                     </div>

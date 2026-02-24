@@ -1,24 +1,25 @@
 
 import { useState } from "react";
 import { Menu, X } from "lucide-react";
-import { Link, useNavigate, NavLink } from "react-router-dom";
-import Register from "./pages/Register";
-import Login from "./pages/Login";
+import { NavLink } from "react-router-dom";
+import { useAuth } from "../context/AuthContext"
+import { signOut } from "firebase/auth";
+import { auth } from "../firebase";
+
 
 
 function Navbar() {
 
+    const { userloggedIn } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
-    const navigate = useNavigate();
-
-    const handleLogin = () => {
-        navigate(<Register />);
-    };
+    
 
     return (
         <div>
 
             <nav className="bg-white shadow-md fixed w-full top-0 left-0 z-50">
+
+                {/* DeskTop Menu */}
                 <div className="max-w-7xl mx-auto px-6 lg:px-8">
                     <div className="flex justify-between items-center h-16">
 
@@ -38,21 +39,27 @@ function Navbar() {
                                 About us
                             </NavLink>
 
-                           
-
-
-
 
                         </div>
 
-                        {/* Button */}
-                        <div className="hidden md:block">
+                        {/* /* Button */}
+
+                        {!userloggedIn && (<div className="hidden md:block">
                             <button className="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 transition">
                                 <NavLink to="/register" className="hover:text-indigo-600 transition">
                                     Sign up
                                 </NavLink>
                             </button>
                         </div>
+                        )}
+
+                        {userloggedIn && <div className="hidden md:block">
+                            <button onClick={()=>signOut(auth)} className="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 transition">
+                                Sign Out
+                            </button>
+                        </div>}
+
+
 
 
 
@@ -66,25 +73,33 @@ function Navbar() {
                         </div>
                     </div>
                 </div>
+                            
 
                 {/* Mobile Menu */}
                 {isOpen && (
-                    <div className="md:hidden bg-white shadow-md px-6 pb-4 space-y-4 text-gray-700 font-medium">
-                        <a href="/" className="block hover:text-indigo-600">
-                            Home
-                        </a>
-                        <a href="/about" className="block hover:text-indigo-600">
-                            About
-                        </a>
-                        <a href="/services" className="block hover:text-indigo-600">
-                            Services
-                        </a>
-                        <a href="/contact" className="block hover:text-indigo-600">
-                            Contact
-                        </a>
-                        <button className="w-full bg-indigo-600 text-white py-2 rounded-lg hover:bg-indigo-700 transition">
-                            Login
-                        </button>
+                    <div className="md:hidden bg-white shadow-md px-6 pb-4 space-y-4 text-gray-700 font-medium flex flex-col gap-2 ">
+                        
+                       <NavLink to="/" onClick={() => setIsOpen(!open)} className="hover:text-indigo-600 transition mt-2">
+                                Home
+                            </NavLink>
+
+                            <NavLink to="/aboutus" onClick={() => setIsOpen(!open)} className="hover:text-indigo-600 transition">
+                                About us
+                            </NavLink>
+                         {!userloggedIn && (<div className=" md:block">
+                            <button onClick={() => setIsOpen(!open)} className="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 transition">
+                                <NavLink to="/register" className="hover:text-indigo-600 transition">
+                                    Sign up
+                                </NavLink>
+                            </button>
+                        </div>
+                        )}
+
+                        {userloggedIn && <div className="md:block">
+                            <button onClick={()=>signOut(auth) && setIsOpen(!open)} className="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 transition">
+                                Sign Out
+                            </button>
+                        </div>}
                     </div>
                 )}
             </nav>

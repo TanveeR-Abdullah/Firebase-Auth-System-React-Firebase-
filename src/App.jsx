@@ -1,8 +1,7 @@
-import { Routes, Route } from "react-router-dom";
+import { createBrowserRouter, Routes, Route } from "react-router-dom";
 import RootLayout from "./router/Rootlayout";
 import Navbar from "./conponents/Navbar";
 import Register from "./conponents/pages/Register";
-import Login from "./conponents/pages/Login";
 import Home from "./conponents/pages/Home";
 import AboutUs from "./conponents/pages/AboutUs";
 import LogInHomepage from "./conponents/pages/LogInHomepage";
@@ -22,7 +21,6 @@ function App() {
         <Route path="/aboutus" element={<AboutUs/>} />
         <Route path="/contact" element={<Contact />} />
         <Route path="/register" element={<Register />} />
-        <Route path="/login" element={<Login />} />
         <Route path="/register/loginhomepage" element={<LogInHomepage />} />
       </Route>
     </Routes>

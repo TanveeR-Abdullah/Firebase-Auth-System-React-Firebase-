@@ -4,12 +4,12 @@ import Navbar from "../conponents/Navbar";
 const RootLayout = () => {
   return (
     <div>
+      
       <Navbar />
-      <div className="min-h-screen">
-        <Outlet />
+      <Outlet />
 
 
-      </div>
+      
     </div>
   );
 };
