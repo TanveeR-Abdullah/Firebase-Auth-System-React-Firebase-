@@ -17,7 +17,7 @@ const Register = () => {
     const [user, setUser] = useState({ email: "", password: "" })
     const [isLoading, setIsLoading] = useState(false);
     const [error, setError] = useState("");
-    
+
 
     // ======================= handler =======================
     const handleInputChange = (e) => {
@@ -81,7 +81,7 @@ const Register = () => {
             const user = result.user;
 
             await setDoc(
-                doc(db, "users", user.uid),
+                doc(db, "user", user.uid),
                 {
                     email: user.email,
                     provider: "google",
