@@ -19,7 +19,7 @@ export default function Home() {
         </h2>
 
         <p className="text-gray-600 max-w-md">
-          This page is protected. Only authenticated users can access this
+          This Website is protected. Only authenticated users can access this
           page. Your session will persist even after refresh.
         </p>
 

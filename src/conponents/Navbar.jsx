@@ -8,11 +8,13 @@ import { auth } from "../firebase";
 
 
 
+
+
 function Navbar() {
 
-    const { userloggedIn } = useAuth();
+    const { userloggedIn, role } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
-    
+
 
     return (
         <div>
@@ -31,14 +33,25 @@ function Navbar() {
                         {/* Desktop Menu */}
                         <div className="hidden md:flex space-x-8 text-gray-700 font-medium">
 
-                            <NavLink to="/" className="hover:text-indigo-600 transition">
+                            <NavLink to="/" className="hover:text-indigo-600 font-bold transition">
                                 Home
                             </NavLink>
 
-                            <NavLink to="/aboutus" className="hover:text-indigo-600 transition">
-                                About us
-                            </NavLink>
 
+
+                            {userloggedIn && (
+                                <>
+                                    <NavLink to="/contact" className="hover:text-indigo-600 font-bold transition">
+                                        Contact
+                                    </NavLink>
+                                    <NavLink to="/aboutus" className="hover:text-indigo-600 font-bold transition">
+                                        About us
+                                    </NavLink>
+                                    <NavLink to="/futureplans" className="hover:text-indigo-600 font-bold transition">
+                                        Future Plans
+                                    </NavLink>
+                                </>
+                            )}
 
                         </div>
 
@@ -52,16 +65,11 @@ function Navbar() {
                             </button>
                         </div>
                         )}
-
                         {userloggedIn && <div className="hidden md:block">
-                            <button onClick={()=>signOut(auth)} className="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 transition">
+                            <button onClick={() => signOut(auth)} className="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 transition">
                                 Sign Out
                             </button>
                         </div>}
-
-
-
-
 
 
 
@@ -73,20 +81,20 @@ function Navbar() {
                         </div>
                     </div>
                 </div>
-                            
+
 
                 {/* Mobile Menu */}
                 {isOpen && (
                     <div className="md:hidden bg-white shadow-md px-6 pb-4 space-y-4 text-gray-700 font-medium flex flex-col gap-2 ">
-                        
-                       <NavLink to="/" onClick={() => setIsOpen(!open)} className="hover:text-indigo-600 transition mt-2">
-                                Home
-                            </NavLink>
 
-                            <NavLink to="/aboutus" onClick={() => setIsOpen(!open)} className="hover:text-indigo-600 transition">
-                                About us
-                            </NavLink>
-                         {!userloggedIn && (<div className=" md:block">
+                        <NavLink to="/" onClick={() => setIsOpen(!open)} className="hover:text-indigo-600 transition mt-2">
+                            Home
+                        </NavLink>
+
+                        <NavLink to="/aboutus" onClick={() => setIsOpen(!open)} className="hover:text-indigo-600 transition">
+                            About us
+                        </NavLink>
+                        {!userloggedIn && (<div className=" md:block">
                             <button onClick={() => setIsOpen(!open)} className="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 transition">
                                 <NavLink to="/register" className="hover:text-indigo-600 transition">
                                     Sign up
@@ -96,7 +104,7 @@ function Navbar() {
                         )}
 
                         {userloggedIn && <div className="md:block">
-                            <button onClick={()=>signOut(auth) && setIsOpen(!open)} className="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 transition">
+                            <button onClick={() => signOut(auth) && setIsOpen(!open)} className="bg-indigo-600 text-white px-5 py-2 rounded-lg hover:bg-indigo-700 transition">
                                 Sign Out
                             </button>
                         </div>}

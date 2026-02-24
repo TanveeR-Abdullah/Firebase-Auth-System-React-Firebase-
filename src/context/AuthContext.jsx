@@ -43,6 +43,8 @@ export const AuthProvider = ({ children }) => {
             setRole("");
         }
 
+        
+
         setLoading(false);
     };
 
