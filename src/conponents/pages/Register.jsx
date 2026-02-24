@@ -113,10 +113,10 @@ const Register = () => {
             const user = result.user;
 
             await setDoc(
-                doc(db, "users", user.uid),
+                doc(db, "user", user.uid),
                 {
                     email: user.email,
-                    provider: "google",
+                    provider: "github",
                     role: "user",
                     createdAt: new Date(),
                 },
@@ -137,9 +137,6 @@ const Register = () => {
             setIsLoading(false);
         }
     };
-
-
-
 
 
 
