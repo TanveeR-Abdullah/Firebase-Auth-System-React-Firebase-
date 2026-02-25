@@ -12,7 +12,7 @@ import { auth } from "../firebase";
 
 function Navbar() {
 
-    const { userloggedIn, role } = useAuth();
+    const { userloggedIn } = useAuth();
     const [isOpen, setIsOpen] = useState(false);
 
 
@@ -42,8 +42,7 @@ function Navbar() {
 
                             {userloggedIn && (
                                 <>
-
-                                    <NavLink to="/register/loginhomepage" className="hover:text-indigo-600 font-bold transition">
+                                    <NavLink to="/register/LogInHomepage" className="hover:text-indigo-600 font-bold transition">
                                         Home
                                     </NavLink>
                                     <NavLink to="/contact" className="hover:text-indigo-600 font-bold transition">

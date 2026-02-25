@@ -64,7 +64,7 @@ const Register = () => {
             );
             setIsLoading(false);
             setError("");
-            navigate("/register/loginhomepage");
+            navigate("loginhomepage");
 
         } catch (err) {
             setIsLoading(false);
@@ -95,7 +95,7 @@ const Register = () => {
                 }),
             );
             setError("");
-            navigate("/register/loginhomepage");
+            navigate("loginhomepage");
 
         } catch (err) {
             setError(err.message);
@@ -128,7 +128,7 @@ const Register = () => {
             );
 
             setError("");
-            navigate("/register/loginhomepage");
+            navigate("loginhomepage");
 
         } catch (err) {
             setError(err.message);
