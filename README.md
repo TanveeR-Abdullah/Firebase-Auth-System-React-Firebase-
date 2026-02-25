@@ -8,4 +8,4 @@
 
 [Live deployment link]:
 
-[overview video link]: https://drive.google.com/drive/folders/10rq58xaeFT1lEoNs0vDu_Qe3UcesYcsT?usp=drive_link
+[overview video link]: https://drive.google.com/drive/folders/10rq58xaeFT1lEoNs0vDu_Qe3UcesYcsT?usp=sharing
