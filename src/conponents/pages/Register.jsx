@@ -94,7 +94,6 @@ const Register = () => {
                     createdAt: new Date(),
                 }),
             );
-
             setError("");
             navigate("/register/loginhomepage");
 

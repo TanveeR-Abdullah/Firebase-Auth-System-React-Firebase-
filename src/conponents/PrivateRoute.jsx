@@ -5,9 +5,9 @@ import { useAuth } from "../context/AuthContext";
 
 const PrivateRoute = ({ children }) => {
 
-    const { userloggedIn, role } = useAuth();
+    const { userloggedIn   } = useAuth();
 
-    return userloggedIn  ? children : <Navigate to="/" />
+    return userloggedIn  ? children : <Navigate to="/" replace />
 
 
 }

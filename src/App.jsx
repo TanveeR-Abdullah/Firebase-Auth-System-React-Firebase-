@@ -27,7 +27,7 @@ function App() {
           }
         />
         <Route
-          path="/register/LogInHomepage"
+          path="/register/loginhomepage"
           element={
             <PrivateRoute>
               <LogInHomepage />

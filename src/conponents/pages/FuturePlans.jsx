@@ -1,11 +1,11 @@
 
 const FuturePlans = () => {
   return (
-    <div className="min-h-screen bg-gray-100">
+    <div className="min-h-screen  bg-gray-100">
 
       {/* Header */}
-      <div className="bg-white shadow-md py-10 text-center">
-        <h1 className="text-4xl font-bold text-indigo-600">
+      <div className="bg-white mt-7 shadow-md py-10 text-center">
+        <h1 className="text-4xl mt-3 font-bold text-indigo-600">
           Our Future Plans
         </h1>
         <p className="text-gray-600 mt-3">

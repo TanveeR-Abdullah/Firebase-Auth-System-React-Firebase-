@@ -33,14 +33,19 @@ function Navbar() {
                         {/* Desktop Menu */}
                         <div className="hidden md:flex space-x-8 text-gray-700 font-medium">
 
-                            <NavLink to="/" className="hover:text-indigo-600 font-bold transition">
-                                Home
-                            </NavLink>
-
+                            {!userloggedIn && (
+                                <NavLink to="/" className="hover:text-indigo-600 font-bold transition">
+                                    Home
+                                </NavLink>
+                            )}
 
 
                             {userloggedIn && (
                                 <>
+
+                                    <NavLink to="/register/loginhomepage" className="hover:text-indigo-600 font-bold transition">
+                                        Home
+                                    </NavLink>
                                     <NavLink to="/contact" className="hover:text-indigo-600 font-bold transition">
                                         Contact
                                     </NavLink>
